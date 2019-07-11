@@ -1,26 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Route, Switch } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
+import { createStyles, CssBaseline, makeStyles } from 'Material';
+
+import BookDetailsPage from 'Components/BookDetails';
+import HomePage from 'Components/Home';
+import { history } from 'Store';
+
 import './App.css';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      flexGrow: 1
+    }
+  })
+);
+
+const App: React.FC = () => (
+  <>
+  <CssBaseline />
+    <div className={useStyles().root}>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/book" component={BookDetailsPage} />
+        </Switch>
+      </ConnectedRouter>
     </div>
-  );
-}
+  </>
+);
 
 export default App;
