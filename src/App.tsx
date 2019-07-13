@@ -1,33 +1,44 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
-import { createStyles, CssBaseline, makeStyles } from 'Material';
+import { createStyles, Container, CssBaseline, makeStyles, Theme } from 'Material';
 
 import BookDetailsPage from 'Components/BookDetails';
 import HomePage from 'Components/Home';
+import Header from 'Header';
+
 import { history } from 'Store';
 
 import './App.css';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1
+    },
+    container: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     }
   })
 );
 
 const App: React.FC = () => (
   <>
-  <CssBaseline />
-    <div className={useStyles().root}>
-      <ConnectedRouter history={history}>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/book" component={BookDetailsPage} />
-        </Switch>
-      </ConnectedRouter>
-    </div>
+    <Header />
+    <Container component="main">
+      <CssBaseline />
+      <div className={useStyles().root}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/book/:id" component={BookDetailsPage} />
+          </Switch>
+        </ConnectedRouter>
+      </div>
+    </Container>
   </>
 );
 

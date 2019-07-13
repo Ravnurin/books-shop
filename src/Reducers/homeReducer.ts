@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 
-import { Actions } from 'Constants/Home';
+import { Actions } from 'Constants/bookActions';
 import { Book } from 'Types/Book';
 
 export interface HomeAction {
@@ -14,7 +14,7 @@ export interface HomeState {
 
 const initialState = [] as Book[];
 
-const booksReducer: Reducer<Book[], HomeAction> = (state = initialState, action) => {
+const homeReducer: Reducer<Book[], HomeAction> = (state = initialState, action) => {
     switch(action.type) {
       case Actions.GET_BOOKS:
         return action.payload;
@@ -23,4 +23,4 @@ const booksReducer: Reducer<Book[], HomeAction> = (state = initialState, action)
     }
 };
 
-export default booksReducer;
+export default homeReducer;

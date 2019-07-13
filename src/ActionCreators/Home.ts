@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { Actions } from 'Constants/Home';
+import { Actions } from 'Constants/bookActions';
 
 export const getBooks = () => (dispatch: any) => {
   return axios

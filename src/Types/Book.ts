@@ -1,13 +1,13 @@
 interface Author {
   firstName: string;
-  id: string;
+  id: number;
   lastName: string;
 }
 
 export type Book = {
   author: Author;
   description: string;
-  id: string;
+  id: number;
   isBn: string;
   price: number;
   stockAmount: number;

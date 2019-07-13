@@ -5,7 +5,7 @@ import { makeStyles, Theme, createStyles, Container, Grid, Typography, Button, C
 
 import { ApplicationState } from 'Reducers';
 import { Book } from 'Types/Book';
-import * as Actions from 'ActionCreators/Home';
+import * as Actions from 'ActionCreators/home';
 
 interface OwnProps {
   getBooks: () => void;
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
     cardGrid: {
       paddingTop: theme.spacing(8),
       paddingBottom: theme.spacing(8),
+      textAlign: 'center'
     },
     card: {
       height: '100%',
@@ -46,8 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(6),
     },
     actions: {
-      display: "flex",
-      justifyContent: "space-between"
+      justifyContent: "center"
     }
   })
 );
@@ -61,47 +61,39 @@ function Home(props: Props) {
   };
 
   useEffect(() => {
-    getBooks();
-  }, [getBooks]);
+    if (books == null || books.length === 0) {
+      getBooks();
+    }
+  }, [books, getBooks]);
 
   return (
     <>
       <main>
-      <Container className={classes.cardGrid} maxWidth="md">
-          <Grid container spacing={4}>
-            {books.map(book => (
-              <Grid item key={`${book.id}-${book.author}`} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image={book.thumbnail}
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h6" component="h2">{book.title}</Typography>
-                    <Typography variant="subtitle1">By: {book.author.firstName} {book.author.lastName}</Typography>
-                    <br />
-                    <Typography variant="subtitle2">Price: {book.price}</Typography>
-                    <Typography variant="subtitle2">Left in stock: {book.stockAmount}</Typography>
-                  </CardContent>
-                  <CardActions className={classes.actions}>
-                    <Button size="small" color="primary" style={{ textAlign: 'left'}} onClick={() => navigateToBookPage(book)}>
-                      View
-                    </Button>
-                    { book.stockAmount > 0
-                      ? (
-                        {/* <Button size="small" color="primary" style={{ textAlign: 'right'}} onClick={() => addToBasket(book)}>
-                          Add to basket
-                        </Button> */}
-                      )
-                      : <Typography variant="subtitle2">Sold out</Typography>
-                    }
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+        <Container className={classes.cardGrid} maxWidth="md">
+            <Grid container justify="center">
+              {books.map(book => (
+                <Grid item key={`${book.id}-${book.author}`} xs={12} sm={6} md={4}>
+                  <Card className={classes.card}>
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image={book.thumbnail}
+                      title="Image title"
+                    />
+                    <CardContent className={classes.cardContent}>
+                      <Typography gutterBottom variant="h6" component="h2">{book.title}</Typography>
+                      <Typography variant="subtitle1">By: {book.author.firstName} {book.author.lastName}</Typography>
+                      <br />
+                      <Typography variant="subtitle2">Price: £{book.price}</Typography>
+                      <Typography variant="subtitle2">Left in stock: {book.stockAmount}</Typography>
+                    </CardContent>
+                    <CardActions className={classes.actions}>
+                      <Button size="medium" color="primary" onClick={() => navigateToBookPage(book)}>See more</Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
       </main>
     </>
   );
